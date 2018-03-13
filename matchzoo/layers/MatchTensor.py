@@ -17,7 +17,7 @@ class MatchTensor(Layer):
         **kwargs: Standard layer keyword arguments.
     """
 
-    def __init__(self, channel, normalize=False, init_diag=False, **kwargs):
+    def __init__(self, channel, normalize=False, init_diag=True, **kwargs):
         super(MatchTensor, self).__init__(**kwargs)
         self.channel = channel
         self.normalize = normalize
@@ -45,13 +45,13 @@ class MatchTensor(Layer):
                     M_diag[i][j][j] = 1.0
             self.M = self.add_weight( name='M', 
                                    shape=(self.channel, shape1[2], shape2[2]),
-                                   initializer=M_diag,
-                                   trainable=True )
+                                   initializer=keras.initializers.constant(M_diag),
+                                   trainable=True)
         else:
             self.M = self.add_weight( name='M', 
                                    shape=(self.channel, shape1[2], shape2[2]),
                                    initializer='uniform',
-                                   trainable=True )
+                                   trainable=True)
 
     def call(self, inputs):
         x1 = inputs[0]
