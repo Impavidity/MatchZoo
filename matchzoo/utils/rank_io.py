@@ -68,7 +68,7 @@ def read_features_with_id(filename, verbose=True):
     features = {}
     for line in open(filename):
         line = line.strip().split()
-        features[line[0]] = list(map(float, line))
+        features[line[0]] = list(map(float, line[1:]))
     if verbose:
         print('[%s]\n\tFeature size: %s' % (filename, len(features)), end='\n')
     return features
